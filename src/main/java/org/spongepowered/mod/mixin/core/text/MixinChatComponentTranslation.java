@@ -27,20 +27,32 @@ package org.spongepowered.mod.mixin.core.text;
 import net.minecraft.util.ChatComponentTranslation;
 import org.spongepowered.api.text.TextBuilder;
 import org.spongepowered.api.text.Texts;
+import org.spongepowered.api.text.translation.Translation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.mod.text.SpongeChatComponent;
+import org.spongepowered.mod.text.SpongeChatComponentTranslation;
 import org.spongepowered.mod.text.translation.SpongeTranslation;
 
 @Mixin(ChatComponentTranslation.class)
-public abstract class MixinChatComponentTranslation extends MixinChatComponentStyle {
+public abstract class MixinChatComponentTranslation extends MixinChatComponentStyle implements SpongeChatComponentTranslation {
 
     @Shadow private String key;
     @Shadow private Object[] formatArgs;
+    private Translation translation;
+
+    @Override
+    public void setTranslation(Translation translation) {
+        this.translation = translation;
+        this.key = translation.getId();
+    }
 
     @Override
     protected TextBuilder createBuilder() {
-        return Texts.builder(new SpongeTranslation(this.key), wrapFormatArgs(this.formatArgs));
+        if (this.translation == null) {
+            this.translation = new SpongeTranslation(this.key);
+        }
+        return Texts.builder(this.translation, wrapFormatArgs(this.formatArgs));
     }
 
     private static Object[] wrapFormatArgs(Object... formatArgs) {
