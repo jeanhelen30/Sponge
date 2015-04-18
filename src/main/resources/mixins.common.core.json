@@ -14,7 +14,6 @@
         "command.MixinCommandBlockLogic",
         "command.MixinCommandExecuteAtSender",
         "command.MixinSubject",
-        "item.MixinEnchantment",
         "item.MixinEnumDyeColor",
         "item.MixinFishType",
         "item.MixinCookedFish",
