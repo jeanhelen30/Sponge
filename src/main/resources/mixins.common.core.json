@@ -10,6 +10,7 @@
         "block.MixinBehaviorProjectileDispense",
         "block.MixinBlock",
         "block.MixinBlockState",
+        "block.meta.MixinEnumBannerPattern",
         "command.MixinCommandBlockLogic",
         "command.MixinCommandExecuteAtSender",
         "command.MixinSubject",

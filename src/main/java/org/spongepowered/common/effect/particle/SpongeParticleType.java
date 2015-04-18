@@ -119,7 +119,7 @@ public class SpongeParticleType implements ParticleType {
 
         @Override
         public ItemStack getDefaultItem() {
-            return ItemStack.class.cast(this.item.copy());
+            return (ItemStack) this.item.copy();
         }
 
     }

@@ -207,7 +207,7 @@ public class SpongeParticleEffectBuilder implements ParticleEffectBuilder {
         @Override
         public Material itemType(ItemType item) {
             checkNotNull(item, "The item type cannot be null!");
-            this.item = ItemStack.class.cast(new net.minecraft.item.ItemStack((Item) item));
+            this.item = (ItemStack) new net.minecraft.item.ItemStack((Item) item);
             return null;
         }
 
