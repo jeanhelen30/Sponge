@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.mod.mixin.core.event.chunk;
+package org.spongepowered.mod.mixin.core.event.world;
 
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.WorldEvent;
