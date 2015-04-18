@@ -45,7 +45,6 @@
         "text.MixinClickEvent",
         "text.MixinHoverEvent",
         "world.MixinAnvilSaveHandler",
-        "world.MixinSaveHandler",
         "world.MixinWorldProviderEnd",
         "world.MixinWorldProviderHell",
         "world.MixinWorldServerMulti",
