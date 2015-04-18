@@ -75,7 +75,7 @@ import org.spongepowered.mod.event.SpongeEventHooks;
 import org.spongepowered.mod.guice.SpongeGuiceModule;
 import org.spongepowered.mod.interfaces.IMixinServerCommandManager;
 import org.spongepowered.mod.plugin.SpongePluginContainer;
-import org.spongepowered.mod.registry.SpongeGameRegistry;
+import org.spongepowered.mod.registry.SpongeModGameRegistry;
 import org.spongepowered.mod.service.permission.SpongeContextCalculator;
 import org.spongepowered.mod.service.permission.SpongePermissionService;
 import org.spongepowered.mod.service.persistence.SpongeSerializationService;
@@ -100,7 +100,7 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
     private final File spongeConfigDir = new File(Loader.instance().getConfigDir() + File.separator + "sponge" + File.separator);
     private Injector spongeInjector = Guice.createInjector(new SpongeGuiceModule());
     private LoadController controller;
-    private SpongeGameRegistry registry;
+    private SpongeModGameRegistry registry;
 
     // This is a special Mod, provided by the IFMLLoadingPlugin. It will be
     // instantiated before FML scans the system for mods (or plugins)
@@ -113,7 +113,7 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
         this.getMetadata().modId = "Sponge";
         SpongeMod.instance = this;
         this.game = this.spongeInjector.getInstance(Game.class);
-        this.registry = (SpongeGameRegistry) this.game.getRegistry();
+        this.registry = (SpongeModGameRegistry) this.game.getRegistry();
         try {
             SimpleCommandService commandService = new SimpleCommandService(this.game, new SpongeCommandDisambiguator(this.game));
             this.game.getServiceManager().setProvider(this, CommandService.class, commandService);
@@ -287,7 +287,7 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
         return getMod();
     }
 
-    public SpongeGameRegistry getSpongeRegistry() {
+    public SpongeModGameRegistry getSpongeRegistry() {
         return this.registry;
     }
 

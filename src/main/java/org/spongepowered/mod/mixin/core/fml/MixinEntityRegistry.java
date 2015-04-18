@@ -41,7 +41,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.mod.SpongeMod;
 import org.spongepowered.mod.entity.SpongeEntityRegistry;
 import org.spongepowered.mod.entity.SpongeEntityType;
-import org.spongepowered.mod.registry.SpongeGameRegistry;
+import org.spongepowered.mod.registry.SpongeModGameRegistry;
 
 import java.util.Map;
 
@@ -49,7 +49,7 @@ import java.util.Map;
 @Mixin(value = EntityRegistry.class, remap = false)
 public abstract class MixinEntityRegistry implements SpongeEntityRegistry {
 
-    private SpongeGameRegistry gameRegistry = (SpongeGameRegistry) SpongeMod.instance.getGame().getRegistry();
+    private SpongeModGameRegistry gameRegistry = (SpongeModGameRegistry) SpongeMod.instance.getGame().getRegistry();
 
     @Shadow
     private ListMultimap<ModContainer, EntityRegistration> entityRegistrations;

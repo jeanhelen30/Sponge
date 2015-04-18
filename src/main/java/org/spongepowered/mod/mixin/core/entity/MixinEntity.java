@@ -71,7 +71,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.mod.SpongeMod;
 import org.spongepowered.mod.data.manipulators.SpongeNameData;
 import org.spongepowered.mod.interfaces.IMixinEntity;
-import org.spongepowered.mod.registry.SpongeGameRegistry;
+import org.spongepowered.mod.registry.SpongeModGameRegistry;
 import org.spongepowered.mod.util.SpongeHooks;
 import org.spongepowered.mod.util.VecHelper;
 import org.spongepowered.mod.world.SpongeDimensionType;
@@ -89,7 +89,7 @@ import javax.annotation.Nullable;
 public abstract class MixinEntity implements Entity, IMixinEntity {
 
     // @formatter:off
-    private EntityType entityType = ((SpongeGameRegistry) SpongeMod.instance.getGame().getRegistry()).entityClassToTypeMappings.get(this.getClass());
+    private EntityType entityType = ((SpongeModGameRegistry) SpongeMod.instance.getGame().getRegistry()).entityClassToTypeMappings.get(this.getClass());
     private boolean teleporting;
     private net.minecraft.entity.Entity teleportVehicle;
     private float origWidth;
