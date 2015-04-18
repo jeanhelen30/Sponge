@@ -29,6 +29,8 @@ import org.spongepowered.api.data.DataManipulator;
 import org.spongepowered.api.data.DataManipulatorBuilder;
 import org.spongepowered.api.data.DataManipulatorRegistry;
 
+import java.util.HashMap;
+
 public class SpongeManipulatorRegistry implements DataManipulatorRegistry {
 
     private static final SpongeManipulatorRegistry instance = new SpongeManipulatorRegistry();
@@ -40,13 +42,16 @@ public class SpongeManipulatorRegistry implements DataManipulatorRegistry {
         return instance;
     }
 
+    // TODO use a better implementation of this.
+    private HashMap<Class, DataManipulatorBuilder> cache = new HashMap();
+
     @Override
     public <T extends DataManipulator<T>> void register(Class<T> manipulatorClass, DataManipulatorBuilder<T> builder) {
-
+        cache.put(manipulatorClass, builder);
     }
 
     @Override
     public <T extends DataManipulator<T>> Optional<DataManipulatorBuilder<T>> getBuilder(Class<T> manipulatorClass) {
-        return null;
+        return Optional.<DataManipulatorBuilder<T>>fromNullable((DataManipulatorBuilder<T>) cache.get(manipulatorClass));
     }
 }

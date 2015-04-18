@@ -45,6 +45,7 @@ import org.spongepowered.api.data.manipulators.tileentities.SignData;
 import org.spongepowered.api.potion.PotionEffectType;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.mod.block.meta.SpongeNotePitch;
+import org.spongepowered.mod.text.SpongeChatComponent;
 
 public final class TileManipulatorUtility {
 
@@ -135,7 +136,7 @@ public final class TileManipulatorUtility {
             final IChatComponent[] rawTexts = ((TileEntitySign) holder).signText;
             final Text[] signTexts = new Text[rawTexts.length];
             for (int i = 0; i < rawTexts.length; i++) {
-                signTexts[i] = (Text) rawTexts[i]; //TODO Make sure this is actually valid. If not, set something on fire.
+                signTexts[i] = ((SpongeChatComponent)rawTexts[i]).toText();
             }
             data.setLines(signTexts);
             return true;
