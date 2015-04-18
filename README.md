@@ -16,7 +16,8 @@ A Forge implementation of the Sponge API. It is licensed under the [MIT License]
 
 ## Clone
 The following steps will ensure your project is cloned properly.  
-1. `git clone --recursive https://github.com/SpongePowered/Sponge.git
+
+1. `git clone --recursive https://github.com/SpongePowered/Sponge.git`
 2. `cd Sponge`
 3. `cp scripts/pre-commit .git/hooks`
 

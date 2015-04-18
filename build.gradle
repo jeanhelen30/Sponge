@@ -25,7 +25,7 @@ version = '2.0-SNAPSHOT' // TODO: ???
 
 apply plugin: 'forge'
 ext.minecraftPlugin = plugins.getPlugin('forge')
-ext.versionSuffix = '11.14.1.1341' // Forge version
+ext.versionSuffix = '11.14.1.1371' // Forge version
 apply from: project(':Common').file('gradle/implementation.gradle')
 
 jar {
