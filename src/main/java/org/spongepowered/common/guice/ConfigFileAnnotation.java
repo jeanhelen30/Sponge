@@ -25,16 +25,15 @@
 package org.spongepowered.common.guice;
 
 import com.google.common.base.Objects;
-import org.spongepowered.api.service.config.ConfigDir;
+import org.spongepowered.api.service.config.DefaultConfig;
 
 import java.lang.annotation.Annotation;
 
-// This is strange, but required for Guice and annotations with values.
-public class ConfigDirAnnotation implements ConfigDir {
+public class ConfigFileAnnotation implements DefaultConfig {
 
     private final boolean shared;
 
-    public ConfigDirAnnotation(boolean shared) {
+    public ConfigFileAnnotation(boolean shared) {
         this.shared = shared;
     }
 
@@ -45,7 +44,7 @@ public class ConfigDirAnnotation implements ConfigDir {
 
     @Override
     public Class<? extends Annotation> annotationType() {
-        return ConfigDir.class;
+        return DefaultConfig.class;
     }
 
     @Override
@@ -53,11 +52,11 @@ public class ConfigDirAnnotation implements ConfigDir {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ConfigDir)) {
+        if (!(o instanceof DefaultConfig)) {
             return false;
         }
 
-        ConfigDir that = (ConfigDir) o;
+        DefaultConfig that = (DefaultConfig) o;
         return sharedRoot() == that.sharedRoot();
     }
 

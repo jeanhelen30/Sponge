@@ -31,13 +31,12 @@ import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.service.config.ConfigDir;
 import org.spongepowered.api.service.config.DefaultConfig;
+import org.spongepowered.common.plugin.SpongePluginContainer;
 
 import java.io.File;
-import java.lang.annotation.Annotation;
 
 import javax.inject.Inject;
 
@@ -46,119 +45,93 @@ import javax.inject.Inject;
  */
 public class SpongePluginGuiceModule extends AbstractModule {
 
-    private final PluginContainer container;
+    private final SpongePluginContainer container;
 
-    public SpongePluginGuiceModule(PluginContainer container) {
+    public SpongePluginGuiceModule(SpongePluginContainer container) {
         this.container = container;
     }
 
     @Override
     protected void configure() {
-        DefaultConfig pluginConfigPrivate = new ConfigFileAnnotation(false);
-        DefaultConfig pluginConfigShared = new ConfigFileAnnotation(true);
-        ConfigDir pluginDirPrivate = new ConfigDirAnnotation(false);
+        ConfigDir privateConfigDir = new ConfigDirAnnotation(false);
+        DefaultConfig sharedConfigFile = new ConfigFileAnnotation(true);
+        DefaultConfig privateConfigFile = new ConfigFileAnnotation(false);
 
         bind(PluginContainer.class).toInstance(this.container);
-        bind(Logger.class).toInstance(LoggerFactory.getLogger(this.container.getId()));
-        bind(File.class).annotatedWith(pluginDirPrivate)
-                .toProvider(PluginConfigDirProvider.class); // plugin-private config directory (shared dir is in the global guice module)
-        bind(File.class).annotatedWith(pluginConfigShared).toProvider(PluginSharedConfigFileProvider.class); // shared-directory config file
-        bind(File.class).annotatedWith(pluginConfigPrivate).toProvider(PluginPrivateConfigFileProvider.class); // plugin-private directory config file
+        bind(Logger.class).toInstance(this.container.getLogger());
+
+        // Plugin-private config directory (shared dir is in the global guice module)
+        bind(File.class).annotatedWith(privateConfigDir).toProvider(PrivateConfigDirProvider.class);
+        bind(File.class).annotatedWith(sharedConfigFile).toProvider(SharedConfigFileProvider.class); // Shared-directory config file
+        bind(File.class).annotatedWith(privateConfigFile).toProvider(PrivateConfigFileProvider.class); // Plugin-private directory config file
+
         bind(new TypeLiteral<ConfigurationLoader<CommentedConfigurationNode>>() {
-        }).annotatedWith(pluginConfigShared)
-                .toProvider(PluginSharedHoconConfigProvider.class); // loader for shared-directory config file
+        }).annotatedWith(sharedConfigFile)
+                .toProvider(SharedHoconConfigProvider.class); // Loader for shared-directory config file
         bind(new TypeLiteral<ConfigurationLoader<CommentedConfigurationNode>>() {
-        }).annotatedWith(pluginConfigPrivate)
-                .toProvider(PluginPrivateHoconConfigProvider.class); // loader for plugin-private directory config file
+        }).annotatedWith(privateConfigFile)
+                .toProvider(PrivateHoconConfigProvider.class); // Loader for plugin-private directory config file
     }
 
-    // This is strange, but required for Guice and annotations with values.
-    private static class ConfigFileAnnotation implements DefaultConfig {
-
-        boolean shared;
-
-        ConfigFileAnnotation(boolean isShared) {
-            this.shared = isShared;
-        }
-
-        @Override
-        public boolean sharedRoot() {
-            return this.shared;
-        }
-
-        @Override
-        public Class<? extends Annotation> annotationType() {
-            return DefaultConfig.class;
-        }
-
-        // See Javadocs for java.lang.annotation.Annotation for specification of equals, hashCode, toString
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || !(o instanceof DefaultConfig)) {
-                return false;
-            }
-
-            DefaultConfig that = (DefaultConfig) o;
-
-            return sharedRoot() == that.sharedRoot();
-        }
-
-        @Override
-        public int hashCode() {
-            return (127 * "sharedRoot".hashCode()) ^ Boolean.valueOf(sharedRoot()).hashCode();
-        }
-
-        @Override
-        public String toString() {
-            return "@org.spongepowered.api.service.config.Config("
-                    + "sharedRoot=" + this.shared
-                    + ')';
-        }
-    }
-
-    private static class PluginSharedConfigFileProvider implements Provider<File> {
+    private static class PrivateConfigDirProvider implements Provider<File> {
 
         private final PluginContainer container;
-        private final File root;
+        private final File configDir;
 
         @Inject
-        private PluginSharedConfigFileProvider(PluginContainer container, @ConfigDir(sharedRoot = true) File sharedConfigDir) {
+        private PrivateConfigDirProvider(PluginContainer container, @ConfigDir(sharedRoot = true) File configDir) {
             this.container = container;
-            this.root = sharedConfigDir;
+            this.configDir = configDir;
         }
 
         @Override
         public File get() {
-            return new File(this.root, this.container.getId() + ".conf");
+            return new File(this.configDir, this.container.getId());
         }
     }
 
-    private static class PluginPrivateConfigFileProvider implements Provider<File> {
+    private static class PrivateConfigFileProvider implements Provider<File> {
 
         private final PluginContainer container;
-        private final File root;
+        private final File configDir;
 
         @Inject
-        private PluginPrivateConfigFileProvider(PluginContainer container, @ConfigDir(sharedRoot = false) File sharedConfigDir) {
+        private PrivateConfigFileProvider(PluginContainer container, @ConfigDir(sharedRoot = false) File configDir) {
             this.container = container;
-            this.root = sharedConfigDir;
+            this.configDir = configDir;
         }
 
         @Override
         public File get() {
-            return new File(this.root, this.container.getId() + ".conf");
+            return new File(this.configDir, this.container.getId() + ".conf");
         }
+
     }
 
-    private static class PluginSharedHoconConfigProvider implements Provider<ConfigurationLoader<CommentedConfigurationNode>> {
+    private static class SharedConfigFileProvider implements Provider<File> {
+
+        private final PluginContainer container;
+        private final File configDir;
+
+        @Inject
+        private SharedConfigFileProvider(PluginContainer container, @ConfigDir(sharedRoot = true) File configDir) {
+            this.container = container;
+            this.configDir = configDir;
+        }
+
+        @Override
+        public File get() {
+            return new File(this.configDir, this.container.getId() + ".conf");
+        }
+
+    }
+
+    private static class SharedHoconConfigProvider implements Provider<ConfigurationLoader<CommentedConfigurationNode>> {
 
         private final File configFile;
 
         @Inject
-        private PluginSharedHoconConfigProvider(@DefaultConfig(sharedRoot = true) File configFile) {
+        private SharedHoconConfigProvider(@DefaultConfig(sharedRoot = true) File configFile) {
             this.configFile = configFile;
         }
 
@@ -166,14 +139,15 @@ public class SpongePluginGuiceModule extends AbstractModule {
         public ConfigurationLoader<CommentedConfigurationNode> get() {
             return HoconConfigurationLoader.builder().setFile(this.configFile).build();
         }
+
     }
 
-    private static class PluginPrivateHoconConfigProvider implements Provider<ConfigurationLoader<CommentedConfigurationNode>> {
+    private static class PrivateHoconConfigProvider implements Provider<ConfigurationLoader<CommentedConfigurationNode>> {
 
         private final File configFile;
 
         @Inject
-        private PluginPrivateHoconConfigProvider(@DefaultConfig(sharedRoot = false) File configFile) {
+        private PrivateHoconConfigProvider(@DefaultConfig(sharedRoot = false) File configFile) {
             this.configFile = configFile;
         }
 
@@ -181,22 +155,7 @@ public class SpongePluginGuiceModule extends AbstractModule {
         public ConfigurationLoader<CommentedConfigurationNode> get() {
             return HoconConfigurationLoader.builder().setFile(this.configFile).build();
         }
+
     }
 
-    private static class PluginConfigDirProvider implements Provider<File> {
-
-        private final PluginContainer container;
-        private final File sharedConfigDir;
-
-        @Inject
-        private PluginConfigDirProvider(PluginContainer container, @ConfigDir(sharedRoot = true) File sharedConfigDir) {
-            this.container = container;
-            this.sharedConfigDir = sharedConfigDir;
-        }
-
-        @Override
-        public File get() {
-            return new File(this.sharedConfigDir, this.container.getId() + "/");
-        }
-    }
 }
