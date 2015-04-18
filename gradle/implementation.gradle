@@ -15,7 +15,7 @@ eclipse {
     classpath {
         file {
             whenMerged { classpath ->
-                def lib = classpath.entries.find { it.path == '/Sponge' }
+                def lib = classpath.entries.find { it.path == '/Common' }
                 def others = classpath.entries.findAll { it != lib }
                 classpath.entries = others + lib
             }
@@ -62,6 +62,9 @@ shadowJar {
         include dependency('com.h2database:h2')
         include dependency('org.xerial:sqlite-jdbc')
     }
+
+    mergeServiceFiles()
+    exclude 'LICENSE', 'NOTICE'
 }
 
 // Run shadowJar on build
