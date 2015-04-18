@@ -66,3 +66,7 @@ jar {
 checkstyle {
     configProperties['suppressions'] = common.file('checkstyle-suppressions.xml')
 }
+
+license {
+    ext.name = 'Sponge'
+}
