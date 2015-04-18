@@ -40,7 +40,7 @@ import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.api.util.command.CommandMapping;
 import org.spongepowered.api.util.command.CommandSource;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.common.Sponge;
 import org.spongepowered.mod.command.MinecraftCommandWrapper;
 import org.spongepowered.mod.interfaces.Subjectable;
 
@@ -63,7 +63,7 @@ public abstract class MixinSubject implements CommandSource, ICommandSender {
     @Nullable
     private Subject internalSubject() {
         if (this.thisSubject == null) {
-            Optional<PermissionService> service = SpongeMod.instance.getGame().getServiceManager().provide(PermissionService.class);
+            Optional<PermissionService> service = Sponge.getGame().getServiceManager().provide(PermissionService.class);
             if (service.isPresent()) {
                 SubjectCollection userSubjects = service.get().getSubjects(((Subjectable) this).getSubjectCollectionIdentifier());
                 if (userSubjects != null) {
@@ -168,7 +168,7 @@ public abstract class MixinSubject implements CommandSource, ICommandSender {
 
     @Override
     public boolean canCommandSenderUseCommand(int permissionLevel, String commandName) {
-        for (CommandMapping mapping : SpongeMod.instance.getGame().getCommandDispatcher().getAll(commandName)) {
+        for (CommandMapping mapping : Sponge.getGame().getCommandDispatcher().getAll(commandName)) {
             if (mapping.getCallable() instanceof MinecraftCommandWrapper) { // best we can do :/
                 return hasPermission(((MinecraftCommandWrapper) mapping.getCallable()).getCommandPermission());
             }

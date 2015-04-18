@@ -37,7 +37,7 @@ import org.spongepowered.api.event.SpongeEventFactory;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.common.Sponge;
 import org.spongepowered.mod.interfaces.IMixinEntityFishHook;
 
 @NonnullByDefault
@@ -54,8 +54,8 @@ public abstract class MixinItemFishingRod extends Item implements IMixinEntityFi
             player.fishEntity.handleHookRetraction();
         } else {
             EntityFishHook fishHook = new EntityFishHook(world, player);
-            if (!SpongeMod.instance.getGame().getEventManager()
-                    .post(SpongeEventFactory.createPlayerCastFishingLineEvent(SpongeMod.instance.getGame(), (Player) player, (FishHook) fishHook))) {
+            if (!Sponge.getGame().getEventManager()
+                    .post(SpongeEventFactory.createPlayerCastFishingLineEvent(Sponge.getGame(), (Player) player, (FishHook) fishHook))) {
                 world.playSoundAtEntity(player, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
                 world.spawnEntityInWorld(fishHook);
 
