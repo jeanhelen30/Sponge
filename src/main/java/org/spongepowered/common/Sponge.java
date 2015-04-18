@@ -26,13 +26,13 @@ package org.spongepowered.common;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
-import static org.spongepowered.mod.configuration.SpongeConfig.Type.GLOBAL;
+import static org.spongepowered.common.configuration.SpongeConfig.Type.GLOBAL;
 
 import com.google.inject.Injector;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.common.launch.SpongeLaunch;
-import org.spongepowered.mod.configuration.SpongeConfig;
+import org.spongepowered.common.configuration.SpongeConfig;
 
 import java.io.File;
 
