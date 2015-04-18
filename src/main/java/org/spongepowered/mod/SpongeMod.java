@@ -47,6 +47,8 @@ import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -190,7 +192,7 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
             });
 
             // Add the SyncScheduler as a listener for ServerTickEvents
-            FMLCommonHandler.instance().bus().register(this.getGame().getSyncScheduler());
+            FMLCommonHandler.instance().bus().register(this);
 
             if (e.getSide() == Side.SERVER) {
                 SpongeHooks.enableThreadContentionMonitoring();
@@ -198,6 +200,13 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
             this.registry.preInit();
         } catch (Throwable t) {
             this.controller.errorOccurred(this, t);
+        }
+    }
+
+    @SubscribeEvent
+    public void onTick(TickEvent.ServerTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            ((SyncScheduler) SyncScheduler.getInstance()).tick();
         }
     }
 
