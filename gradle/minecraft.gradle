@@ -1,4 +1,4 @@
-ext.api = common.project(':SpongeAPI')
+ext.api = common.project('SpongeAPI')
 
 apply from: api.file('gradle/java.gradle')
 
