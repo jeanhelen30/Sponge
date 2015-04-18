@@ -36,7 +36,7 @@ import org.spongepowered.api.service.permission.Subject;
 import org.spongepowered.api.service.permission.SubjectCollection;
 import org.spongepowered.api.service.permission.context.ContextCalculator;
 import org.spongepowered.api.util.command.CommandSource;
-import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.common.Sponge;
 import org.spongepowered.mod.service.permission.base.FixedParentMemorySubjectData;
 import org.spongepowered.mod.service.permission.base.GlobalMemorySubjectData;
 
@@ -80,7 +80,7 @@ public class SpongePermissionService implements PermissionService {
             @Override
             public CommandSource apply(String s) {
                 if (s.equals("Server")) {
-                    return SpongeMod.instance.getGame().getServer().getConsole();
+                    return Sponge.getGame().getServer().getConsole();
                 } else if (s.equals("RCON")) {
                     // TODO: Implement RCON API?
                 }

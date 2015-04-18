@@ -35,6 +35,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.spongepowered.api.service.sql.SqlService;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
+import org.spongepowered.common.Sponge;
 import org.spongepowered.mod.mixin.plugin.CoreMixinPlugin;
 
 import java.io.Closeable;
@@ -197,7 +198,7 @@ public class SqlServiceImpl implements SqlService, Closeable {
 
     @Override
     public Optional<String> getConnectionUrlFromAlias(String alias) {
-        return Optional.fromNullable(CoreMixinPlugin.getGlobalConfig().getConfig().getSql().getAliases().get(alias));
+        return Optional.fromNullable(Sponge.getGlobalConfig().getConfig().getSql().getAliases().get(alias));
     }
 
 }
