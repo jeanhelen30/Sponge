@@ -210,7 +210,7 @@ public class SpongeModGameRegistry extends SpongeGameRegistry {
 
             @Override
             public BannerPatternShape apply(String input) {
-                BannerPatternShape bannerPattern = BannerPatternShape.class.cast(TileEntityBanner.EnumBannerPattern.valueOf(input));
+                BannerPatternShape bannerPattern = (BannerPatternShape) (Object) TileEntityBanner.EnumBannerPattern.valueOf(input);
                 SpongeModGameRegistry.this.bannerPatternShapeMappings.put(bannerPattern.getName(), bannerPattern);
                 SpongeModGameRegistry.this.idToBannerPatternShapeMappings.put(bannerPattern.getId(), bannerPattern);
                 return bannerPattern;
@@ -224,7 +224,7 @@ public class SpongeModGameRegistry extends SpongeGameRegistry {
 
             @Override
             public Fish apply(String input) {
-                Fish fish = Fish.class.cast(ItemFishFood.FishType.valueOf(input));
+                Fish fish = (Fish) (Object) ItemFishFood.FishType.valueOf(input);
                 if (fish != null) {
                     SpongeModGameRegistry.this.fishMappings.put(fish.getId(), fish);
                     return fish;
@@ -238,7 +238,7 @@ public class SpongeModGameRegistry extends SpongeGameRegistry {
 
             @Override
             public CookedFish apply(String input) {
-                CookedFish fish = CookedFish.class.cast(ItemFishFood.FishType.valueOf(input));
+                CookedFish fish = (CookedFish) (Object) ItemFishFood.FishType.valueOf(input);
                 if (fish != null) {
                     SpongeModGameRegistry.this.cookedFishMappings.put(fish.getId(), fish);
                     return fish;
@@ -254,7 +254,7 @@ public class SpongeModGameRegistry extends SpongeGameRegistry {
 
             @Override
             public DyeColor apply(String input) {
-                DyeColor dyeColor = DyeColor.class.cast(EnumDyeColor.valueOf(input));
+                DyeColor dyeColor = (DyeColor) (Object) EnumDyeColor.valueOf(input);
                 SpongeModGameRegistry.this.dyeColorMappings.put(dyeColor.getName(), dyeColor);
                 return dyeColor;
             }
