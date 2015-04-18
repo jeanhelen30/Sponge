@@ -22,43 +22,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.mod.block.meta;
+package org.spongepowered.mod.data.types;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.spongepowered.api.data.DataQuery.of;
+import org.spongepowered.api.data.types.SkullType;
 
-import org.spongepowered.api.data.DataContainer;
-import org.spongepowered.api.data.MemoryDataContainer;
-import org.spongepowered.api.data.manipulators.tileentities.BannerData;
-import org.spongepowered.api.data.types.BannerPatternShape;
-import org.spongepowered.api.data.types.DyeColor;
+public class SpongeTypeValueHandler {
 
-public class SpongePatternLayer implements BannerData.PatternLayer {
-
-    private final BannerPatternShape id;
-    private final DyeColor color;
-
-    public SpongePatternLayer(BannerPatternShape id, DyeColor color) {
-        this.id = checkNotNull(id);
-        this.color = checkNotNull(color);
-    }
-
-    @Override
-    public BannerPatternShape getId() {
-        return this.id;
-    }
-
-    @Override
-    public DyeColor getColor() {
-        return this.color;
-    }
-
-    @Override
-    public DataContainer toContainer() {
-        DataContainer container = new MemoryDataContainer();
-        container.set(of("id"), this.id.getId());
-        container.set(of("color"), this.color.getName());
-        return container;
+    public static int getSkullValue(SkullType skullType) {
+        return 0; // todo
     }
 
 }

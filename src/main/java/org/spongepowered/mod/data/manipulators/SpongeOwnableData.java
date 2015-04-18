@@ -22,43 +22,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.mod.block.meta;
+package org.spongepowered.mod.data.manipulators;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.spongepowered.api.data.DataQuery.of;
-
+import com.google.common.base.Optional;
+import org.spongepowered.api.GameProfile;
+import org.spongepowered.api.data.AbstractDataManipulator;
 import org.spongepowered.api.data.DataContainer;
-import org.spongepowered.api.data.MemoryDataContainer;
-import org.spongepowered.api.data.manipulators.tileentities.BannerData;
-import org.spongepowered.api.data.types.BannerPatternShape;
-import org.spongepowered.api.data.types.DyeColor;
+import org.spongepowered.api.data.DataHolder;
+import org.spongepowered.api.data.DataPriority;
+import org.spongepowered.api.data.manipulators.OwnableData;
 
-public class SpongePatternLayer implements BannerData.PatternLayer {
+public class SpongeOwnableData extends AbstractDataManipulator<OwnableData> implements OwnableData {
 
-    private final BannerPatternShape id;
-    private final DyeColor color;
+    private GameProfile profile;
 
-    public SpongePatternLayer(BannerPatternShape id, DyeColor color) {
-        this.id = checkNotNull(id);
-        this.color = checkNotNull(color);
+    @Override
+    public GameProfile getProfile() {
+        return this.profile;
     }
 
     @Override
-    public BannerPatternShape getId() {
-        return this.id;
+    public void setProfile(GameProfile profile) {
+
     }
 
     @Override
-    public DyeColor getColor() {
-        return this.color;
+    public GameProfile getValue() {
+        return null;
+    }
+
+    @Override
+    public void setValue(GameProfile value) {
+
+    }
+
+    @Override
+    public Optional<OwnableData> fill(DataHolder dataHolder) {
+        return null;
+    }
+
+    @Override
+    public Optional<OwnableData> fill(DataHolder dataHolder, DataPriority overlap) {
+        return null;
+    }
+
+    @Override
+    public Optional<OwnableData> from(DataContainer container) {
+        return null;
+    }
+
+    @Override
+    public int compareTo(OwnableData o) {
+        return 0;
     }
 
     @Override
     public DataContainer toContainer() {
-        DataContainer container = new MemoryDataContainer();
-        container.set(of("id"), this.id.getId());
-        container.set(of("color"), this.color.getName());
-        return container;
+        return null;
     }
-
 }

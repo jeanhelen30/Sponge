@@ -54,24 +54,4 @@ public abstract class MixinTileEntityMobSpawner extends MixinTileEntity {
         }
     }
 
-//    @Override
-//    public DataContainer toContainer() {
-//        DataContainer container = super.toContainer();
-//        container.set(of("Delay"), this.mobspawner$getRemainingDelay());
-//        container.set(of("MinimumDelay"), this.mobspawner$getMinimumSpawnDelay());
-//        container.set(of("MaximumDelay"), this.mobspawner$getMaximumSpawnDelay());
-//        container.set(of("SpawnCount"), this.mobspawner$getSpawnCount());
-//        container.set(of("MaxNearbyEntities"), this.mobspawner$getMaximumNearbyEntities());
-//        container.set(of("RequiredPlayerRange"), this.mobspawner$getRequiredPlayerRange());
-//        container.set(of("SpawnRange"), this.mobspawner$getSpawnRange());
-//        List<DataView> views = Lists.newArrayList();
-//        for (WeightedRandomEntity entity : this.mobspawner$getPossibleEntitiesToSpawn()) {
-//            DataContainer entityContainer = new MemoryDataContainer();
-//            entityContainer.set(of("EntityType"), entity.getEntityType().getId());
-//            entityContainer.set(of("Weight"), entity.getWeight());
-//            entityContainer.set(of("EntityData"), entity.getAdditionalProperties());
-//        }
-//        container.set(of("WeightedEntities"), views);
-//        return container;
-//    }
 }

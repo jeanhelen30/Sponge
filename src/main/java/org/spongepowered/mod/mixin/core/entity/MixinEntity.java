@@ -47,8 +47,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataHolder;
 import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.DataManipulatorBuilder;
 import org.spongepowered.api.data.DataPriority;
 import org.spongepowered.api.data.DataTransactionResult;
+import org.spongepowered.api.data.DataView;
 import org.spongepowered.api.data.MemoryDataContainer;
 import org.spongepowered.api.data.Property;
 import org.spongepowered.api.data.manipulators.entities.NameData;
@@ -69,8 +71,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.mod.data.SpongeManipulatorRegistry;
 import org.spongepowered.mod.data.manipulators.SpongeNameData;
 import org.spongepowered.mod.interfaces.IMixinEntity;
+import org.spongepowered.mod.mixin.core.data.IMixinDataHolder;
 import org.spongepowered.mod.registry.SpongeGameRegistry;
 import org.spongepowered.mod.util.SpongeHooks;
 import org.spongepowered.mod.util.VecHelper;
@@ -86,7 +90,7 @@ import javax.annotation.Nullable;
 
 @NonnullByDefault
 @Mixin(net.minecraft.entity.Entity.class)
-public abstract class MixinEntity implements Entity, IMixinEntity {
+public abstract class MixinEntity implements Entity, IMixinEntity, IMixinDataHolder {
 
     // @formatter:off
     private EntityType entityType = ((SpongeGameRegistry) SpongeMod.instance.getGame().getRegistry()).entityClassToTypeMappings.get(this.getClass());
@@ -94,6 +98,7 @@ public abstract class MixinEntity implements Entity, IMixinEntity {
     private net.minecraft.entity.Entity teleportVehicle;
     private float origWidth;
     private float origHeight;
+    private DataContainer customData = new MemoryDataContainer();
 
     @Shadow private UUID entityUniqueID;
     @Shadow public net.minecraft.world.World worldObj;
@@ -644,16 +649,16 @@ public abstract class MixinEntity implements Entity, IMixinEntity {
     @SuppressWarnings("unchecked")
     @Override
     public <T extends DataManipulator<T>> Optional<T> getData(Class<T> dataClass) {
-        if (NameData.class.isAssignableFrom((Class) dataClass)) {
-            NameData nameData = new SpongeNameData();
-            return (Optional<T>) (Optional) nameData.fill(this);
-        }
-        return Optional.absent();
+        return getOrCreate(dataClass);
     }
 
     @Override
     public <T extends DataManipulator<T>> Optional<T> getOrCreate(Class<T> manipulatorClass) {
-        return null;
+        Optional<DataManipulatorBuilder<T>> builderOptional = SpongeManipulatorRegistry.getInstance().getBuilder(manipulatorClass);
+        if (builderOptional.isPresent()) {
+            return builderOptional.get().createFrom(this);
+        }
+        return Optional.absent();
     }
 
     @Override
@@ -714,9 +719,13 @@ public abstract class MixinEntity implements Entity, IMixinEntity {
         return container;
     }
 
-    protected <T extends DataManipulator<T>> DataTransactionResult preTransaction(T manipulatorData, T oldData,
-                                                                                  DataHolder mixinEntityTNTPrimed) {
+    protected <T extends DataManipulator<T>> DataTransactionResult preTransaction(T manipulatorData, T oldData, DataHolder mixinEntityTNTPrimed) {
         // TODO stuff
         return null;
+    }
+
+    @Override
+    public DataView getCustomDataView() {
+        return this.customData;
     }
 }

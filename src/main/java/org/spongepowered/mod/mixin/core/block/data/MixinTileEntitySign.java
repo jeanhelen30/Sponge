@@ -26,16 +26,23 @@ package org.spongepowered.mod.mixin.core.block.data;
 
 import static org.spongepowered.api.data.DataQuery.of;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import net.minecraft.util.IChatComponent;
 import org.spongepowered.api.block.tile.Sign;
 import org.spongepowered.api.data.DataContainer;
+import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.DataPriority;
+import org.spongepowered.api.data.DataTransactionResult;
+import org.spongepowered.api.data.Property;
+import org.spongepowered.api.service.persistence.InvalidDataException;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.Collection;
 import java.util.List;
 
 @NonnullByDefault
@@ -57,5 +64,50 @@ public abstract class MixinTileEntitySign extends MixinTileEntity {
 //        }
         container.set(of("Lines"), lines);
         return container;
+    }
+
+    @Override
+    public <T extends DataManipulator<T>> boolean remove(Class<T> manipulatorClass) {
+        return super.remove(manipulatorClass);
+    }
+
+    @Override
+    public <T extends DataManipulator<T>> boolean isCompatible(Class<T> manipulatorClass) {
+        return super.isCompatible(manipulatorClass);
+    }
+
+    @Override
+    public <T extends DataManipulator<T>> DataTransactionResult offer(T manipulatorData) {
+        return super.offer(manipulatorData);
+    }
+
+    @Override
+    public <T extends DataManipulator<T>> DataTransactionResult offer(T manipulatorData, DataPriority priority) {
+        return super.offer(manipulatorData, priority);
+    }
+
+    @Override
+    public Collection<? extends DataManipulator<?>> getManipulators() {
+        return super.getManipulators();
+    }
+
+    @Override
+    public <T extends Property<?, ?>> Optional<T> getProperty(Class<T> propertyClass) {
+        return super.getProperty(propertyClass);
+    }
+
+    @Override
+    public Collection<? extends Property<?, ?>> getProperties() {
+        return super.getProperties();
+    }
+
+    @Override
+    public boolean validateRawData(DataContainer container) {
+        return super.validateRawData(container);
+    }
+
+    @Override
+    public void setRawData(DataContainer container) throws InvalidDataException {
+        super.setRawData(container);
     }
 }

@@ -32,6 +32,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import org.spongepowered.api.data.DataManipulator;
+import org.spongepowered.api.data.DataManipulatorBuilder;
 import org.spongepowered.api.data.DataPriority;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.Property;
@@ -43,6 +44,7 @@ import org.spongepowered.api.service.persistence.InvalidDataException;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.mod.data.SpongeManipulatorRegistry;
 import org.spongepowered.mod.item.ItemsHelper;
 
 import java.util.Collection;
@@ -53,23 +55,14 @@ import java.util.List;
 @Mixin(net.minecraft.item.ItemStack.class)
 public abstract class MixinItemStack implements ItemStack {
 
-    @Shadow
-    public int stackSize;
+    @Shadow public int stackSize;
 
+    @Shadow public abstract int getItemDamage();
+    @Shadow public abstract void setItemDamage(int meta);
+    @Shadow public abstract int getMaxStackSize();
+    @Shadow public abstract NBTTagCompound getTagCompound();
     @Shadow(prefix = "shadow$")
     public abstract Item shadow$getItem();
-
-    @Shadow
-    public abstract int getItemDamage();
-
-    @Shadow
-    public abstract void setItemDamage(int meta);
-
-    @Shadow
-    public abstract int getMaxStackSize();
-
-    @Shadow
-    public abstract NBTTagCompound getTagCompound();
 
     @Override
     public ItemType getItem() {
@@ -97,11 +90,15 @@ public abstract class MixinItemStack implements ItemStack {
 
     @Override
     public <T extends DataManipulator<T>> Optional<T> getData(Class<T> dataClass) {
-        return Optional.absent();
+        return getOrCreate(dataClass);
     }
 
     @Override
     public <T extends DataManipulator<T>> Optional<T> getOrCreate(Class<T> manipulatorClass) {
+        Optional<DataManipulatorBuilder<T>> builderOptional = SpongeManipulatorRegistry.getInstance().getBuilder(manipulatorClass);
+        if (builderOptional.isPresent()) {
+            return builderOptional.get().createFrom(this);
+        }
         return Optional.absent();
     }
 
