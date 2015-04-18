@@ -49,7 +49,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.mod.data.SpongeManipulatorRegistry;
-import org.spongepowered.mod.mixin.core.data.IMixinDataHolder;
+import org.spongepowered.mod.interfaces.IMixinDataHolder;
 import org.spongepowered.mod.service.persistence.NbtTranslator;
 import org.spongepowered.mod.util.VecHelper;
 

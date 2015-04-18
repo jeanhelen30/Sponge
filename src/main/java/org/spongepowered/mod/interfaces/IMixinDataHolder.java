@@ -22,7 +22,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.mod.mixin.core.data;
+package org.spongepowered.mod.interfaces;
 
 import org.spongepowered.api.data.DataView;
 

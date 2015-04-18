@@ -27,14 +27,12 @@ package org.spongepowered.mod.mixin.core.block.data;
 import static org.spongepowered.mod.data.types.SpongeTypeValueHandler.getSkullValue;
 
 import com.google.common.base.Optional;
-import org.spongepowered.api.GameProfile;
 import org.spongepowered.api.block.tile.Skull;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.DataManipulator;
 import org.spongepowered.api.data.DataPriority;
 import org.spongepowered.api.data.DataTransactionResult;
 import org.spongepowered.api.data.Property;
-import org.spongepowered.api.data.manipulators.OwnableData;
 import org.spongepowered.api.data.manipulators.entities.SkullData;
 import org.spongepowered.api.data.types.SkullType;
 import org.spongepowered.api.service.persistence.InvalidDataException;
@@ -44,12 +42,7 @@ import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.mod.SpongeMod;
-import org.spongepowered.mod.data.manipulators.SpongeOwnableData;
-import org.spongepowered.mod.data.manipulators.entities.SpongeSkullData;
-import org.spongepowered.mod.entity.SpongeEntityConstants;
-import org.spongepowered.mod.entity.SpongeEntityRegistry;
-import org.spongepowered.mod.mixin.core.data.IMixinDataHolder;
-import org.spongepowered.mod.registry.SpongeGameRegistry;
+import org.spongepowered.mod.interfaces.IMixinDataHolder;
 
 import java.util.Collection;
 import java.util.List;
