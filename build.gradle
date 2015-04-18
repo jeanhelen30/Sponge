@@ -48,6 +48,10 @@ dependencies {
     runtime 'org.xerial:sqlite-jdbc:3.8.7'
 }
 
+license {
+    ext.name = 'Sponge'
+}
+
 // Add Javadocs for example sources
 javadoc {
     source 'src/example/java'
