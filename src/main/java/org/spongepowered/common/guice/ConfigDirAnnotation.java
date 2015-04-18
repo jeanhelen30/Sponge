@@ -29,11 +29,11 @@ import org.spongepowered.api.service.config.ConfigDir;
 import java.lang.annotation.Annotation;
 
 // This is strange, but required for Guice and annotations with values.
-class ConfigDirAnnotation implements ConfigDir {
+public class ConfigDirAnnotation implements ConfigDir {
 
     boolean shared;
 
-    ConfigDirAnnotation(boolean isShared) {
+    public ConfigDirAnnotation(boolean isShared) {
         this.shared = isShared;
     }
 

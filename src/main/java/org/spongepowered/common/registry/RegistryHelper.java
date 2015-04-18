@@ -31,7 +31,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
-class RegistryHelper {
+public class RegistryHelper {
 
     public static boolean mapFields(Class<?> apiClass, Map<String, ?> mapping, Collection<String> ignoredFields) {
         boolean mappingSuccess = true;
