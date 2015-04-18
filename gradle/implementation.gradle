@@ -1,4 +1,4 @@
-ext.common = project(':SpongeCommon')
+ext.common = project(':Common')
 
 apply from: common.file('gradle/minecraft.gradle')
 
@@ -37,7 +37,7 @@ shadowJar {
 
     dependencies {
         // Common
-        include project(':Sponge')
+        include project(common.path)
         include dependency('org.spongepowered:mixin')
 
         // SpongeAPI
