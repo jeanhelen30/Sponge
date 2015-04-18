@@ -24,7 +24,6 @@
  */
 package org.spongepowered.mod;
 
-import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import org.spongepowered.api.MinecraftVersion;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
