@@ -26,7 +26,6 @@ package org.spongepowered.mod.entity;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.CombatTracker;
-import org.spongepowered.mod.mixin.core.entity.living.MixinEntityLiving;
 
 public final class CombatHelper {
 
