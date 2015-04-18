@@ -53,7 +53,7 @@ import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.mod.SpongeMod;
 import org.spongepowered.mod.event.EventRegistry;
 import org.spongepowered.mod.event.SpongeEventBus;
-import org.spongepowered.mod.guice.SpongePluginGuiceModule;
+import org.spongepowered.common.guice.SpongePluginGuiceModule;
 
 import java.io.File;
 import java.lang.annotation.Annotation;

@@ -34,9 +34,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.spongepowered.api.world.Chunk;
 import org.spongepowered.api.world.World;
 import org.spongepowered.api.world.gen.Populator;
-import org.spongepowered.mod.interfaces.IMixinEntity;
-import org.spongepowered.mod.interfaces.IMixinWorld;
-import org.spongepowered.mod.util.SpongeHooks;
+import org.spongepowered.common.interfaces.IMixinEntity;
+import org.spongepowered.common.interfaces.IMixinWorld;
+import org.spongepowered.common.util.SpongeHooks;
 
 public class SpongeEventHooks {
 
