@@ -2,7 +2,6 @@
     "required": true,
     "minVersion": "0.2",
     "package": "org.spongepowered.common.mixin.core",
-    "plugin" : "org.spongepowered.common.mixin.plugin.CoreMixinPlugin",
     "refmap": "mixins.common.refmap.json",
     "mixins": [
         "MixinGameProfile",
