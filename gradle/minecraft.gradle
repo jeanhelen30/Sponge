@@ -66,4 +66,3 @@ jar {
 checkstyle {
     configProperties['suppressions'] = common.file('checkstyle-suppressions.xml')
 }
-

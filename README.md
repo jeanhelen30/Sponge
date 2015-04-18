@@ -52,4 +52,3 @@ Are you a talented programmer looking to contribute some code? We'd love the hel
 [MIT License]: http://www.tldrlegal.com/license/mit-license
 [Community Chat]: https://webchat.esper.net/?channels=sponge
 [Development Chat]: https://webchat.esper.net/?channels=spongedev
-
