@@ -37,7 +37,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.LoadController;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainerFactory;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -68,6 +67,7 @@ import org.spongepowered.api.service.sql.SqlService;
 import org.spongepowered.api.util.command.CommandMapping;
 import org.spongepowered.api.world.Dimension;
 import org.spongepowered.api.world.DimensionType;
+import org.spongepowered.common.Sponge;
 import org.spongepowered.mod.command.CommandSponge;
 import org.spongepowered.mod.command.MinecraftCommandWrapper;
 import org.spongepowered.common.command.SpongeCommandDisambiguator;
@@ -97,8 +97,6 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
     private static final Logger logger = LogManager.getLogger("Sponge");
 
     private final Game game;
-    private final File spongeConfigDir = new File(Loader.instance().getConfigDir() + File.separator + "sponge" + File.separator);
-    private Injector spongeInjector = Guice.createInjector(new SpongeGuiceModule());
     private LoadController controller;
     private SpongeModGameRegistry registry;
 
@@ -112,8 +110,13 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
         this.getMetadata().name = "Sponge";
         this.getMetadata().modId = "Sponge";
         SpongeMod.instance = this;
-        this.game = this.spongeInjector.getInstance(Game.class);
+
+        // Initialize Sponge
+        Guice.createInjector(new SpongeGuiceModule(logger)).getInstance(Sponge.class);
+
+        this.game = Sponge.getGame();
         this.registry = (SpongeModGameRegistry) this.game.getRegistry();
+
         try {
             SimpleCommandService commandService = new SimpleCommandService(this.game, new SpongeCommandDisambiguator(this.game));
             this.game.getServiceManager().setProvider(this, CommandService.class, commandService);
@@ -155,7 +158,7 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
     }
 
     public Injector getInjector() {
-        return this.spongeInjector;
+        return Sponge.getInjector();
     }
 
     public LoadController getController() {
@@ -167,7 +170,7 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
     }
 
     public File getConfigDir() {
-        return this.spongeConfigDir;
+        return Sponge.getConfigDirectory();
     }
 
     @Override

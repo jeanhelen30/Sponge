@@ -27,6 +27,7 @@ package org.spongepowered.mod.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import net.minecraftforge.fml.common.Loader;
+import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.GameRegistry;
 import org.spongepowered.api.plugin.PluginManager;
@@ -45,8 +46,16 @@ import java.io.File;
 
 public class SpongeGuiceModule extends AbstractModule {
 
+    private final Logger logger;
+
+    public SpongeGuiceModule(Logger logger) {
+        this.logger = logger;
+    }
+
     @Override
     protected void configure() {
+        bind(Logger.class).toInstance(this.logger);
+
         bind(Game.class).to(SpongeGame.class).in(Scopes.SINGLETON);
         bind(PluginManager.class).to(SpongePluginManager.class).in(Scopes.SINGLETON);
         bind(ServiceManager.class).to(SimpleServiceManager.class).in(Scopes.SINGLETON);

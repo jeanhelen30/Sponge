@@ -151,8 +151,5 @@
         "world.MixinWorldServer",
         "world.MixinWorldType",
         "world.storage.MixinWorldInfo"
-    ],
-    "client": [
-        "client.server.MixinIntegratedServer"
     ]
 }
