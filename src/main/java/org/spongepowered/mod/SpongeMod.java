@@ -74,7 +74,7 @@ import org.spongepowered.common.command.SpongeCommandDisambiguator;
 import org.spongepowered.mod.event.SpongeEventHooks;
 import org.spongepowered.mod.guice.SpongeGuiceModule;
 import org.spongepowered.common.interfaces.IMixinServerCommandManager;
-import org.spongepowered.mod.plugin.SpongePluginContainer;
+import org.spongepowered.mod.plugin.SpongeModPluginContainer;
 import org.spongepowered.mod.registry.SpongeModGameRegistry;
 import org.spongepowered.common.service.permission.SpongeContextCalculator;
 import org.spongepowered.common.service.permission.SpongePermissionService;
@@ -105,7 +105,7 @@ public class SpongeMod extends DummyModContainer implements PluginContainer {
     public SpongeMod() {
         super(new ModMetadata());
         // Register our special instance creator with FML
-        ModContainerFactory.instance().registerContainerType(Type.getType(Plugin.class), SpongePluginContainer.class);
+        ModContainerFactory.instance().registerContainerType(Type.getType(Plugin.class), SpongeModPluginContainer.class);
 
         this.getMetadata().name = "Sponge";
         this.getMetadata().modId = "Sponge";

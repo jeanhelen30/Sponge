@@ -47,9 +47,11 @@ import net.minecraftforge.fml.common.event.FMLStateEvent;
 import net.minecraftforge.fml.common.versioning.ArtifactVersion;
 import net.minecraftforge.fml.common.versioning.DefaultArtifactVersion;
 import net.minecraftforge.fml.common.versioning.VersionRange;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.api.event.Event;
 import org.spongepowered.api.event.state.StateEvent;
-import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.common.plugin.SpongePluginContainer;
 import org.spongepowered.mod.SpongeMod;
 import org.spongepowered.mod.event.EventRegistry;
 import org.spongepowered.mod.event.SpongeEventBus;
@@ -65,7 +67,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
-public class SpongePluginContainer implements ModContainer, PluginContainer {
+public class SpongeModPluginContainer implements ModContainer, SpongePluginContainer {
 
     private String pluginClassName;
     private ModCandidate modCandidate;
@@ -79,7 +81,7 @@ public class SpongePluginContainer implements ModContainer, PluginContainer {
 
     private Object pluginInstance;
 
-    public SpongePluginContainer(String className, ModCandidate candidate, Map<String, Object> descriptor) {
+    public SpongeModPluginContainer(String className, ModCandidate candidate, Map<String, Object> descriptor) {
         this.pluginClassName = className;
         this.modCandidate = candidate;
         this.pluginDescriptor = descriptor;
@@ -328,4 +330,10 @@ public class SpongePluginContainer implements ModContainer, PluginContainer {
     public boolean shouldLoadInEnvironment() {
         return true;
     }
+
+    @Override
+    public Logger getLogger() {
+        return LoggerFactory.getLogger(getId());
+    }
+
 }
