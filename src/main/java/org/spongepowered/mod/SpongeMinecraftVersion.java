@@ -25,6 +25,7 @@
 package org.spongepowered.mod;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import org.spongepowered.api.MinecraftVersion;
 import org.spongepowered.api.util.annotation.NonnullByDefault;
 
@@ -90,7 +91,7 @@ public class SpongeMinecraftVersion implements ProtocolMinecraftVersion {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return Objects.toStringHelper(this)
                 .add("name", this.name)
                 .add("protocol", this.protocol)
                 .toString();

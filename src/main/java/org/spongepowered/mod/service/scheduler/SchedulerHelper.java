@@ -27,7 +27,7 @@ package org.spongepowered.mod.service.scheduler;
 import com.google.common.base.Optional;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.service.scheduler.Task;
-import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.common.Sponge;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -131,7 +131,7 @@ public class SchedulerHelper {
         // The argument is an Object so we have due diligence to perform...
         // Owner is not a PluginContainer derived class
         if (!PluginContainer.class.isAssignableFrom(plugin.getClass())) {
-            SpongeMod.instance.getLogger().warn(SchedulerLogMessages.PLUGIN_CONTAINER_INVALID_WARNING);
+            Sponge.getLogger().warn(SchedulerLogMessages.PLUGIN_CONTAINER_INVALID_WARNING);
             // The plugin owner was not valid, so the "Collection" is empty.
             // Eg., the resulting Collection is NOT present vs. empty.
             return null;
@@ -228,13 +228,13 @@ public class SchedulerHelper {
 
         // No owner
         if (plugin == null) {
-            SpongeMod.instance.getLogger().warn(SchedulerLogMessages.PLUGIN_CONTAINER_NULL_WARNING);
+            Sponge.getLogger().warn(SchedulerLogMessages.PLUGIN_CONTAINER_NULL_WARNING);
             return null;
         }
-        Optional<PluginContainer> container = SpongeMod.instance.getGame().getPluginManager().fromInstance(plugin);
+        Optional<PluginContainer> container = Sponge.getGame().getPluginManager().fromInstance(plugin);
         if (!container.isPresent()) {
             // Owner is not a PluginContainer derived class
-            SpongeMod.instance.getLogger().warn(SchedulerLogMessages.PLUGIN_CONTAINER_INVALID_WARNING);
+            Sponge.getLogger().warn(SchedulerLogMessages.PLUGIN_CONTAINER_INVALID_WARNING);
             return null;
         }
 
@@ -253,17 +253,17 @@ public class SchedulerHelper {
 
         // Is task a Runnable task?
         if (runnableTarget == null) {
-            SpongeMod.instance.getLogger().warn(SchedulerLogMessages.NULL_RUNNABLE_ARGUMENT_WARNING);
+            Sponge.getLogger().warn(SchedulerLogMessages.NULL_RUNNABLE_ARGUMENT_WARNING);
             return null;
         }
 
         if (offset < 0L) {
-            SpongeMod.instance.getLogger().error(SchedulerLogMessages.DELAY_NEGATIVE_ERROR);
+            Sponge.getLogger().error(SchedulerLogMessages.DELAY_NEGATIVE_ERROR);
             return null;
         }
 
         if (period < 0L) {
-            SpongeMod.instance.getLogger().error(SchedulerLogMessages.INTERVAL_NEGATIVE_ERROR);
+            Sponge.getLogger().error(SchedulerLogMessages.INTERVAL_NEGATIVE_ERROR);
             return null;
         }
 

@@ -35,7 +35,7 @@ import org.spongepowered.api.potion.PotionEffectBuilder;
 import org.spongepowered.api.potion.PotionEffectType;
 import org.spongepowered.api.service.persistence.DataBuilder;
 import org.spongepowered.api.service.persistence.InvalidDataException;
-import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.common.Sponge;
 
 public class SpongePotionEffectBuilder implements DataBuilder<PotionEffect> {
 
@@ -61,7 +61,7 @@ public class SpongePotionEffectBuilder implements DataBuilder<PotionEffect> {
         int amplifier = container.getInt(new DataQuery("Amplifier")).get();
         boolean ambience = container.getBoolean(new DataQuery("Ambience")).get();
         boolean particles = container.getBoolean(new DataQuery("ShowsParticles")).get();
-        PotionEffectBuilder builder = SpongeMod.instance.getGame().getRegistry().getBuilderOf(PotionEffectBuilder.class).get();
+        PotionEffectBuilder builder = Sponge.getGame().getRegistry().getBuilderOf(PotionEffectBuilder.class).get();
 
         return Optional.of(builder.potionType(potionType)
                                   .particles(particles)

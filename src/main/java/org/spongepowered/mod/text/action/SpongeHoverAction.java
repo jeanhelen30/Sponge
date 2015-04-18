@@ -31,7 +31,6 @@ import net.minecraft.stats.StatBase;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import org.spongepowered.api.text.action.HoverAction;
-import org.spongepowered.mod.entity.SpongeEntityType;
 import org.spongepowered.mod.text.SpongeText;
 
 public class SpongeHoverAction {

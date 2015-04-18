@@ -36,7 +36,7 @@ import org.spongepowered.api.item.FireworkShape;
 import org.spongepowered.api.item.FireworkShapes;
 import org.spongepowered.api.service.persistence.DataBuilder;
 import org.spongepowered.api.service.persistence.InvalidDataException;
-import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.common.Sponge;
 
 import java.awt.Color;
 import java.util.List;
@@ -73,7 +73,7 @@ public class SpongeFireworkDataBuilder implements DataBuilder<FireworkEffect> {
         }
         boolean trails = container.getBoolean(TRAILS).get();
         boolean flickers = container.getBoolean(FLICKERS).get();
-        FireworkEffectBuilder builder = SpongeMod.instance.getGame().getRegistry().getBuilderOf(FireworkEffectBuilder.class).get();
+        FireworkEffectBuilder builder = Sponge.getGame().getRegistry().getBuilderOf(FireworkEffectBuilder.class).get();
         return Optional.of(builder.colors(colors)
                                    .fades(fades)
                                    .flicker(flickers)

@@ -26,7 +26,7 @@ package org.spongepowered.mod.entity;
 
 import static org.spongepowered.api.data.DataQuery.of;
 
-import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import org.spongepowered.api.CatalogType;
 import org.spongepowered.api.data.DataContainer;
 import org.spongepowered.api.data.MemoryDataContainer;
@@ -77,7 +77,7 @@ public class SpongeEntityMeta implements CatalogType {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this)
+        return Objects.toStringHelper(this)
                 .add("type", this.type)
                 .add("name", this.name)
                 .toString();

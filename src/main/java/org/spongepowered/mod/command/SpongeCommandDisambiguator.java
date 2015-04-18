@@ -35,7 +35,7 @@ import org.spongepowered.api.util.command.CommandMapping;
 import org.spongepowered.api.util.command.CommandSource;
 import org.spongepowered.api.util.command.dispatcher.Disambiguator;
 import org.spongepowered.api.util.command.dispatcher.SimpleDispatcher;
-import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.common.Sponge;
 import org.spongepowered.mod.mixin.plugin.CoreMixinPlugin;
 
 import java.util.List;
@@ -61,14 +61,14 @@ public class SpongeCommandDisambiguator implements Disambiguator {
             if (chosenPlugin != null) {
                 Optional<PluginContainer> container = this.game.getPluginManager().getPlugin(chosenPlugin);
                 if (!container.isPresent()) {
-                    SpongeMod.instance.getLogger().warn("Unable to find plugin '" + chosenPlugin + "' for command '" + aliasUsed + "', falling back"
+                    Sponge.getLogger().warn("Unable to find plugin '" + chosenPlugin + "' for command '" + aliasUsed + "', falling back"
                             + " to default");
                 } else {
                     final Set<CommandMapping> ownedCommands = this.game.getCommandDispatcher().getOwnedBy(container.get());
                     final List<CommandMapping> ownedMatchingCommands = ImmutableList.copyOf(Iterables.filter(availableOptions,
                             Predicates.in(ownedCommands)));
                     if (ownedMatchingCommands.isEmpty()) {
-                        SpongeMod.instance.getLogger().warn("Plugin " + container.get().getName() + " was specified as the preferred owner for "
+                        Sponge.getLogger().warn("Plugin " + container.get().getName() + " was specified as the preferred owner for "
                                 + aliasUsed + ", but does not have any such command!");
                     } else if (ownedMatchingCommands.size() > 1) {
                         throw new IllegalStateException("Plugin " + container.get().getName() + " seems to have multiple commands registered as "

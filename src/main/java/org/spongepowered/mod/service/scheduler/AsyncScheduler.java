@@ -27,7 +27,7 @@ package org.spongepowered.mod.service.scheduler;
 import com.google.common.base.Optional;
 import org.spongepowered.api.service.scheduler.AsynchronousScheduler;
 import org.spongepowered.api.service.scheduler.Task;
-import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.common.Sponge;
 
 import java.util.Collection;
 import java.util.Map;
@@ -203,8 +203,8 @@ public class AsyncScheduler implements AsynchronousScheduler {
                 // The taskMap has been modified; there is work to do.
                 // Continue on without handling the Exception.
             } catch (IllegalMonitorStateException e) {
-                SpongeMod.instance.getLogger().error(SchedulerLogMessages.CATASTROPHIC_ERROR_IN_SCHEDULER_SEEK_HELP);
-                SpongeMod.instance.getLogger().error(e.toString());
+                Sponge.getLogger().error(SchedulerLogMessages.CATASTROPHIC_ERROR_IN_SCHEDULER_SEEK_HELP);
+                Sponge.getLogger().error(e.toString());
             }
 
             // We've locked down the taskMap but the lock is short lived if the size of the
@@ -332,7 +332,7 @@ public class AsyncScheduler implements AsynchronousScheduler {
         ScheduledTask nonRepeatingTask = this.schedulerHelper.taskValidationStep(plugin, runnableTarget, noDelay, noPeriod);
 
         if (nonRepeatingTask == null) {
-            SpongeMod.instance.getLogger().warn(SchedulerLogMessages.CANNOT_MAKE_TASK_WARNING);
+            Sponge.getLogger().warn(SchedulerLogMessages.CANNOT_MAKE_TASK_WARNING);
         } else {
             resultTask = utilityForAddingAsyncTask(nonRepeatingTask);
         }
@@ -410,7 +410,7 @@ public class AsyncScheduler implements AsynchronousScheduler {
         ScheduledTask nonRepeatingTask = this.schedulerHelper.taskValidationStep(plugin, runnableTarget, delay, noPeriod);
 
         if (nonRepeatingTask == null) {
-            SpongeMod.instance.getLogger().warn(SchedulerLogMessages.CANNOT_MAKE_TASK_WARNING);
+            Sponge.getLogger().warn(SchedulerLogMessages.CANNOT_MAKE_TASK_WARNING);
         } else {
             resultTask = utilityForAddingAsyncTask(nonRepeatingTask);
         }
@@ -514,7 +514,7 @@ public class AsyncScheduler implements AsynchronousScheduler {
         ScheduledTask repeatingTask = this.schedulerHelper.taskValidationStep(plugin, runnableTarget, noDelay, interval);
 
         if (repeatingTask == null) {
-            SpongeMod.instance.getLogger().warn(SchedulerLogMessages.CANNOT_MAKE_TASK_WARNING);
+            Sponge.getLogger().warn(SchedulerLogMessages.CANNOT_MAKE_TASK_WARNING);
         } else {
             resultTask = utilityForAddingAsyncTask(repeatingTask);
         }
@@ -629,7 +629,7 @@ public class AsyncScheduler implements AsynchronousScheduler {
         ScheduledTask repeatingTask = this.schedulerHelper.taskValidationStep(plugin, runnableTarget, delay, interval);
 
         if (repeatingTask == null) {
-            SpongeMod.instance.getLogger().warn(SchedulerLogMessages.CANNOT_MAKE_TASK_WARNING);
+            Sponge.getLogger().warn(SchedulerLogMessages.CANNOT_MAKE_TASK_WARNING);
         } else {
             resultTask = utilityForAddingAsyncTask(repeatingTask);
         }
@@ -703,8 +703,8 @@ public class AsyncScheduler implements AsynchronousScheduler {
         try {
             this.executor.submit(task.runnableBody);
         } catch (Exception ex) {
-            SpongeMod.instance.getLogger().error(SchedulerLogMessages.USER_TASK_FAILED_TO_RUN_ERROR);
-            SpongeMod.instance.getLogger().error(ex.toString());
+            Sponge.getLogger().error(SchedulerLogMessages.USER_TASK_FAILED_TO_RUN_ERROR);
+            Sponge.getLogger().error(ex.toString());
             bRes = false;
 
         }

@@ -33,7 +33,7 @@ import org.spongepowered.api.event.SpongeEventFactory;
 import org.spongepowered.api.event.server.StatusPingEvent;
 import org.spongepowered.api.status.StatusClient;
 import org.spongepowered.api.status.StatusResponse;
-import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.common.Sponge;
 import org.spongepowered.mod.text.SpongeText;
 
 import java.net.InetSocketAddress;
@@ -61,7 +61,7 @@ public final class SpongeStatusResponse {
     }
 
     private static ServerStatusResponse call(ServerStatusResponse response, StatusClient client) {
-        if (!SpongeMod.instance.getGame().getEventManager().post(SpongeEventFactory.createStatusPing(SpongeMod.instance.getGame(), client,
+        if (!Sponge.getGame().getEventManager().post(SpongeEventFactory.createStatusPing(Sponge.getGame(), client,
                 (StatusPingEvent.Response) response))) {
             return response;
         } else {

@@ -33,7 +33,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.api.GameRegistry;
 import org.spongepowered.api.world.gen.WorldGeneratorModifier;
-import org.spongepowered.mod.SpongeMod;
+import org.spongepowered.common.Sponge;
 import org.spongepowered.mod.registry.SpongeGameRegistry;
 
 import java.util.Collection;
@@ -54,7 +54,7 @@ public final class WorldGeneratorRegistry {
     private static final Logger logger = LogManager.getLogger();
 
     public static WorldGeneratorRegistry getInstance() {
-        SpongeGameRegistry registry = (SpongeGameRegistry) SpongeMod.instance.getGame().getRegistry();
+        SpongeGameRegistry registry = (SpongeGameRegistry) Sponge.getGame().getRegistry();
         return registry.getWorldGeneratorRegistry();
     }
 
